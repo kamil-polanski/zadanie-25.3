@@ -1,10 +1,13 @@
 const express = require('express');
+const fs = require('fs');
 const app = express();
+
 
 app.get('/', (req, res) => {
     console.log('Otrzymałem żądanie GET do strony głównej');
-    res.send('Hello GET!');
+    res.send(`Identyfikator, który został dopisany to  ${req.params.id}`);
 });
+
 
 app.post('/', (req, res) => {
     console.log('Otrzymałem żądanie POST do strony głównej');
@@ -26,6 +29,17 @@ app.post('/ab*cd', (req, res) => {
     res.send('Wzór pasuje');
 });
 
-const server = app.listen(9000, function() {
-    console.log('Przykładowa aplikacja nasłuchuje na http://localhost:9000');
+app.get('/getnote', (req, res) => {
+    console.log('pobbieram get note');
+    fs.readFile('./test.json', 'utf8', (err, data) => {
+        if (err) throw err;
+        stringifyFile = data
+        res.send(data);
+    });
 });
+
+app.use(function(req, res, next) {
+    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
+});
+
+app.listen(9000);
