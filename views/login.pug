@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Node Hello world example
+  body
+  h1 Logowanie
+  
+  p
+    form(action='http://localhost:9000/logon', method='GET')
+      p
+        | Name: 
+        input(type='text', name='name')
+
+      input(type='submit', value='Submit')

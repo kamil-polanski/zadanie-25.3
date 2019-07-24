@@ -1,24 +1,24 @@
 const express = require('express');
 const app = express();
 
-app.use(express.static('assets'));
+app.set('view engine', 'pug');
+app.set('views', './views');
+app.use(express.static('assets'))
+
 
 app.get('/', (req, res) => {
-    res.sendFile('/index.html')
+    res.render('login');
 });
 
-app.get('/userform', (req, res) => {
-    const response = {
-        first_name: req.query.first_name,
-        last_name: req.query.last_name
-    };
-    res.json(response);
-
+app.get('/logon', (req, res) => {
+    const name = req.query.name;
+    res.render('logon', {
+        name: name,
+        url: "http://www.google.com"
+    });
 });
 
-const server = app.listen(9000, 'localhost', () => {
-    const host = server.address().address;
-    const port = server.address().port;
-
-    console.log(`Przykładowa aplikacja nasłuchuje na http://${host}:${port}`);
+app.listen(9000);
+app.use((req, res, next) => {
+    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
 });

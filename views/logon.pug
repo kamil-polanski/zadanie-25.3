@@ -1,0 +1,10 @@
+html
+    head
+        title Twoja strona logowania 
+    body
+        if(name)
+            h1 #{name}, udało Ci się zalogować.
+            include ./data.pug
+            include ./footer.pug
+        else
+            a(href="/") Logowanie nieudane, spróbuj jeszcze raz!
