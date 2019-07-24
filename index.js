@@ -1,29 +1,24 @@
 const express = require('express');
-const fs = require('fs');
 const app = express();
-let stringifyFile;
 
+app.use(express.static('assets'));
 
-app.get('/getnote', (req, res) => {
-    console.log('pobbieram get note');
-    fs.readFile('./test.json', 'utf8', (err, data) => {
-        if (err) throw err;
-        stringifyFile = data
-        res.send(data);
-    });
+app.get('/', (req, res) => {
+    res.sendFile('/index.html')
 });
 
-app.post('/updateNote/:note', (req, res) => {
-    console.log('wysyłam note!');
-    stringifyFile += req.params.note;
-    fs.writeFile('./test.json', stringifyFile, (err) => {
-        if (err) throw err;
-        console.log('file updated');
-    });
+app.get('/userform', (req, res) => {
+    const response = {
+        first_name: req.query.first_name,
+        last_name: req.query.last_name
+    };
+    res.json(response);
+
 });
 
-app.use((req, res, next) => {
-    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
-});
+const server = app.listen(9000, 'localhost', () => {
+    const host = server.address().address;
+    const port = server.address().port;
 
-app.listen(9000);
+    console.log(`Przykładowa aplikacja nasłuchuje na http://${host}:${port}`);
+});
