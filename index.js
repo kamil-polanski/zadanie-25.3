@@ -11,11 +11,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/logon', (req, res) => {
-    const name = req.query.name;
-    res.render('logon', {
-        name: name,
-        url: "http://www.google.com"
-    });
+    let name = req.query.name;
+    if (name)
+        res.render('logon', {
+            name: name,
+            url: "http://www.google.com"
+        });
+    else {
+        res.render('err');
+    }
 });
 
 app.listen(9000);
