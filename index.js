@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 
-
 app.use(express.static('assets'));
 app.use('/store',(req, res, next) => {
     console.log('Jestem pośrednikiem przy żądaniu do /store');
@@ -32,5 +31,5 @@ const server = app.listen(9000, 'localhost', () => {
 });
 
 app.use((req, res, next) => {
-    res.status(404).send('Błąd 404');
+    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
 });
