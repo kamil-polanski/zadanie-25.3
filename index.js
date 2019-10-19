@@ -13,12 +13,13 @@ app.get('/getnote', (req, res) => {
     });
 });
 
-app.post('/updateNote/:note', (req, res) => {
+app.get('/updateNote/:note', (req, res) => {
     console.log('wysyłam note!');
     stringifyFile += req.params.note;
     fs.writeFile('./test.json', stringifyFile, (err) => {
         if (err) throw err;
         console.log('file updated');
+        res.status(200).send('file updated!')
     });
 });
 
